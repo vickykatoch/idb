@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"target": "ES2017",
+		"lib": ["ES2017", "DOM"],
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"strict": true,
+		"declaration": false,
+		"sourceMap": true,
+		"skipLibCheck": true,
+		"noUncheckedIndexedAccess": true
+	},
+	"include": ["src", "test", "vite.config.ts"]
+}
