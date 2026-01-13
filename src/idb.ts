@@ -125,8 +125,14 @@ export async function readMultipleRecords<T extends JsonValue>(
 			};
 
 			transaction.onerror = (txnEvent: Event) => {
-				console.error('Transaction error:', txnEvent.target.error);
-				reject(txnEvent.target.error);
+				const target = txnEvent.target as IDBRequest | null;
+				if (target?.error) {
+					console.error('Transaction error:', target.error);
+					reject(target.error);
+				} else {
+					console.error('Transaction error: Unknown error');
+					reject(new Error('Unknown error'));
+				}
 			};
 		};
 	});
@@ -176,8 +182,14 @@ export async function deleteMultipleRecords<T extends JsonValue>(
 			};
 
 			transaction.onerror = (txnEvent: Event) => {
-				console.error('Transaction error:', txnEvent.target.error);
-				reject(txnEvent.target.error);
+				const target = txnEvent.target as IDBRequest | null;
+				if (target?.error) {
+					console.error('Transaction error:', target.error);
+					reject(target.error);
+				} else {
+					console.error('Transaction error: Unknown error');
+					reject(new Error('Unknown error'));
+				}
 			};
 		};
 	});
@@ -203,7 +215,7 @@ export function onNewRecord<T extends JsonValue>(
 			const transaction = db.transaction('changeLog', 'readonly');
 			const changeLogStore = transaction.objectStore('changeLog');
 
-			changeLogStore.openCursor().onsuccess = (cursorEvent: IDBRequestEvent) => {
+			changeLogStore.openCursor().onsuccess = (cursorEvent: Event) => {
 				const cursor = (cursorEvent.target as IDBRequest<IDBCursorWithValue>).result;
 				if (cursor) {
 					if (!seenChanges.has(cursor.primaryKey)) {
@@ -241,7 +253,7 @@ export function onNewRecordWithLog(dbName: string, callback: (value: JsonValue) 
 			const transaction = db.transaction('changeLog', 'readonly');
 			const changeLogStore = transaction.objectStore('changeLog');
 
-			changeLogStore.openCursor().onsuccess = (cursorEvent: IDBRequestEvent) => {
+			changeLogStore.openCursor().onsuccess = (cursorEvent: Event) => {
 				const cursor = (cursorEvent.target as IDBRequest<IDBCursorWithValue>).result;
 				if (cursor) {
 					if (!seenChanges.has(cursor.primaryKey)) {

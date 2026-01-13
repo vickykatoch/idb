@@ -35,8 +35,8 @@
 	"license": "ISC",
 	"devDependencies": {
 		"@babel/core": "^7.28.6",
-		"@babel/preset-env": "^7.28.6",
-		"@biomejs/biome": "^2.3.11",
+		"@babel/preset-env": "7.28.5",
+		"@biomejs/biome": "2.3.10",
 		"@rollup/plugin-babel": "^6.1.0",
 		"@rollup/plugin-commonjs": "^29.0.0",
 		"@rollup/plugin-json": "^6.1.0",
@@ -46,7 +46,8 @@
 		"fake-indexeddb": "^6.2.5",
 		"jsdom": "^27.4.0",
 		"rollup": "^4.55.1",
-		"rollup-plugin-dts": "^6.3.0",
+		"rollup-plugin-dts": "^6.2.3",
+		"tslib": "^2.8.1",
 		"typescript": "^5.9.3",
 		"vite": "^7.2.4",
 		"vitest": "^2.1.9"
