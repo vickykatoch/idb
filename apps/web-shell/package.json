@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@idb/eficc-grid": "workspace:*",
     "@idb/ui-core": "workspace:*",
     "@salt-ds/core": "^1.60.0",
     "@salt-ds/icons": "^1.18.0",

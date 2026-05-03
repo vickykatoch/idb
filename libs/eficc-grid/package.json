@@ -1,5 +1,5 @@
 {
-  "name": "@idb/ui-core",
+  "name": "@idb/eficc-grid",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -24,10 +24,5 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "typescript": "^6.0.3"
-  },
-  "dependencies": {
-    "@salt-ds/core": "^1.60.0",
-    "@salt-ds/icons": "^1.18.0",
-    "@salt-ds/theme": "^1.43.0"
   }
 }
