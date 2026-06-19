@@ -1,18 +1,33 @@
 import './App.css';
-import { EficcGrid } from '@idb/eficc-grid';
+import { Suspense, lazy } from 'react';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+
+// Dynamically discover all plugin entry points at build time.
+// Each folder under /plugins/<name>/index.ts is mounted at /<name>.
+const pluginModules = import.meta.glob('../../../plugins/**/index.ts');
+
+const pluginRoutes = Object.entries(pluginModules).map(([filePath, loader]) => {
+  const match = filePath.match(/plugins\/([^/]+)\/index\.ts$/);
+  const name = match?.[1] ?? filePath;
+  const Component = lazy(loader as () => Promise<{ default: React.ComponentType }>);
+  return { path: `/${name}`, Component };
+});
 
 function App() {
-  const columns = [
-    { key: 'name', header: 'Name' },
-    { key: 'age', header: 'Age' },
-  ];
+  const firstPlugin = pluginRoutes[0];
 
-  const rows = [
-    { name: 'John Doe', age: 30 },
-    { name: 'Jane Smith', age: 25 },
-  ];
-
-  return <EficcGrid columns={columns} rows={rows} />;
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<div>Loading…</div>}>
+        <Routes>
+          {pluginRoutes.map(({ path, Component }) => (
+            <Route key={path} path={path} element={<Component />} />
+          ))}
+          {firstPlugin && <Route path="/" element={<Navigate to={firstPlugin.path} replace />} />}
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  );
 }
 
 export default App;
